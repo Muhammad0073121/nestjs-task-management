@@ -46,6 +46,8 @@ lerna-debug.log*
 .temp
 .tmp
 
+yarn.lock
+
 # Runtime data
 pids
 *.pid
