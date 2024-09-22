@@ -4,7 +4,7 @@ import { createTaskDto } from './dto/create-task.dto';
 import { searchFilterDto } from './dto/search-filter.dto';
 
 @Entity()
-export class Task extends BaseEntity {
+export class Tasks extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -17,7 +17,7 @@ export class Task extends BaseEntity {
   @Column()
   status: TaskStatus;
 
-  static async createTask(createTaskDto: createTaskDto): Promise<Task> {
+  static async createTask(createTaskDto: createTaskDto): Promise<Tasks> {
     const { title, description } = createTaskDto;
     const task = this.create({
       title,
@@ -28,7 +28,7 @@ export class Task extends BaseEntity {
     return task;
   }
 
-  static async getTasks(searchFilterDto: searchFilterDto): Promise<Task[]> {
+  static async getTasks(searchFilterDto: searchFilterDto): Promise<Tasks[]> {
     const query = this.createQueryBuilder('task');
     const { search, status } = searchFilterDto;
 

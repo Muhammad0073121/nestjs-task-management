@@ -6,24 +6,27 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { createTaskDto } from './dto/create-task.dto';
 import { taskStatusDto } from './dto/task-status.dto';
 import { searchFilterDto } from './dto/search-filter.dto';
-import { Task } from './task.entity';
+import { Tasks } from './tasks.entity';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('tasks')
+@UseGuards(AuthGuard())
 export class TasksController {
   constructor(private taskService: TasksService) {}
 
   @Get()
-  getTasks(@Body() searchFilterDto: searchFilterDto): Promise<Task[]> {
+  getTasks(@Body() searchFilterDto: searchFilterDto): Promise<Tasks[]> {
     return this.taskService.getTasks(searchFilterDto);
   }
 
   @Get('/:id')
-  getTaskById(@Param('id') id: string): Promise<Task> {
+  getTaskById(@Param('id') id: string): Promise<Tasks> {
     return this.taskService.getTaskById(id);
   }
 
@@ -36,13 +39,13 @@ export class TasksController {
   updateTaskStatus(
     @Param('id') id: string,
     @Body() updateStatusDto: taskStatusDto,
-  ): Promise<Task> {
+  ): Promise<Tasks> {
     const { status } = updateStatusDto;
     return this.taskService.updateTaskStatus(id, status);
   }
 
   @Post()
-  createTask(@Body() createTaskDto: createTaskDto): Promise<Task> {
+  createTask(@Body() createTaskDto: createTaskDto): Promise<Tasks> {
     return this.taskService.createTask(createTaskDto);
   }
 }
