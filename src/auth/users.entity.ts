@@ -1,5 +1,5 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { authCredentialsDto } from './dto/auth-credentials.dto';
+import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import {
   ConflictException,
   InternalServerErrorException,
@@ -18,7 +18,7 @@ export class Users extends BaseEntity {
   password: String;
 
   static async createUser(
-    authCredentialsDto: authCredentialsDto,
+    authCredentialsDto: AuthCredentialsDto,
   ): Promise<void> {
     const { username, password } = authCredentialsDto;
 
@@ -39,6 +39,5 @@ export class Users extends BaseEntity {
         throw new InternalServerErrorException();
       }
     }
-    return;
   }
 }
